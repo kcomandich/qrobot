@@ -3,5 +3,6 @@ $LOAD_PATH.push File.expand_path("../../lib", __FILE__)
 require 'robot'
 
 robot = Robot.new
+robot.intro_text
 robot.accept_commands
 

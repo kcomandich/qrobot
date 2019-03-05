@@ -18,6 +18,20 @@ class Robot
     return format RED, "#{msg}\n"
   end
 
+  def intro_text
+    puts "Toy Robot Simulator"
+    puts "A simulation of a toy robot moving on a square 5x5 board"
+    puts "Type 'QUIT' to exit at any time"
+    puts "\n"
+    puts "(0,0) is the southwest-most corner"
+    puts "Options:"
+    puts "  * PLACE X,Y,F"
+    puts "  PLACE will put the robot on the board in position X,Y and facing (F) NORTH, SOUTH, EAST, or WEST"
+    puts "  * MOVE will move the robot one unit forward in the direction it is currently facing"
+    puts "  * LEFT and RIGHT will rotate the robot 90 degrees in the specified direction without changing the posion of the robot"
+    puts "  * REPORT will announce the X, Y and F of the robot"
+  end
+
   def accept_commands
     command = nil
     while command != 'quit'
