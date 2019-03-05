@@ -24,12 +24,14 @@ class Robot
     puts "Type 'QUIT' to exit at any time"
     puts "\n"
     puts "(0,0) is the southwest-most corner"
+    puts "\n"
     puts "Options:"
     puts "  * PLACE X,Y,F"
     puts "  PLACE will put the robot on the board in position X,Y and facing (F) NORTH, SOUTH, EAST, or WEST"
     puts "  * MOVE will move the robot one unit forward in the direction it is currently facing"
-    puts "  * LEFT and RIGHT will rotate the robot 90 degrees in the specified direction without changing the posion of the robot"
+    puts "  * LEFT and RIGHT will rotate the robot 90 degrees in the specified direction without changing the position of the robot"
     puts "  * REPORT will announce the X, Y and F of the robot"
+    puts "\n"
   end
 
   def accept_commands

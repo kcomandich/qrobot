@@ -29,12 +29,14 @@ A simulation of a toy robot moving on a square 5x5 board
 Type 'QUIT' to exit at any time
 
 (0,0) is the southwest-most corner
+
 Options:
   * PLACE X,Y,F
   PLACE will put the robot on the board in position X,Y and facing (F) NORTH, SOUTH, EAST, or WEST
   * MOVE will move the robot one unit forward in the direction it is currently facing
-  * LEFT and RIGHT will rotate the robot 90 degrees in the specified direction without changing the posion of the robot
+  * LEFT and RIGHT will rotate the robot 90 degrees in the specified direction without changing the position of the robot
   * REPORT will announce the X, Y and F of the robot
+
 > PLACE 0,0,NORTH
 > MOVE
 > LEFT
