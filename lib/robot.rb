@@ -40,6 +40,9 @@ class Robot
     when 'PLACE'
       return unless args
       place(args)
+    when 'MOVE'
+      return unless robot_is_on_board
+      move
     when 'REPORT'
       return unless robot_is_on_board
       report
@@ -64,6 +67,25 @@ class Robot
       @x_coord = x.to_i
       @y_coord = y.to_i
       @facing = facing
+    end
+  end
+
+  def move
+    x = @x_coord
+    y = @y_coord
+    case @facing
+    when 'EAST'
+      x = @x_coord + 1
+    when 'WEST'
+      x = @x_coord - 1
+    when 'NORTH'
+      y = @y_coord + 1
+    when 'SOUTH'
+      y = @y_coord - 1
+    end
+    if valid_place_args(x, y, @facing)
+      @x_coord = x
+      @y_coord = y
     end
   end
 
