@@ -8,9 +8,9 @@ class Robot
   attr_accessor :x_coord, :y_coord, :facing
 
   def initialize
-    @x_coord = 0
-    @y_coord = 0
-    @facing = :north
+    @x_coord = nil
+    @y_coord = nil
+    @facing = nil 
   end
 
   def self.error(msg)
@@ -37,7 +37,7 @@ class Robot
 
     case command
     when 'place'
-      # TODO error if no args
+      return unless args
       @x_coord = args.split(',')[0]
       @y_coord = args.split(',')[1]
       # TODO error checking for allowed coordinates
