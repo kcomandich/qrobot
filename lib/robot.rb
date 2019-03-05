@@ -39,10 +39,10 @@ class Robot
     case command
     when 'PLACE'
       return unless args
-      place_robot(args)
+      place(args)
     when 'REPORT'
       return unless robot_is_on_board
-      puts "X: #{@x_coord} Y: #{@y_coord}, Facing: #{@facing}"
+      report
     end
   end
 
@@ -58,13 +58,17 @@ class Robot
     return true
   end
 
-  def place_robot(args)
+  def place(args)
     x, y, facing = args.upcase.split(',')
     if valid_place_args(x, y, facing)
       @x_coord = x.to_i
       @y_coord = y.to_i
       @facing = facing
     end
+  end
+
+  def report
+    puts "X: #{@x_coord} Y: #{@y_coord}, Facing: #{@facing}"
   end
 end
 
