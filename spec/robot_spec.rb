@@ -26,6 +26,15 @@ RSpec.describe Robot do
       expect(r.facing).to be nil
     end
 
+    it 'ignores the PLACE command if the coordinates take the robot off the defined board limits' do
+      allow(Readline).to receive(:readline).exactly(2).times.and_return('PLACE 0,9', 'quit')
+      r = Robot.new
+      r.accept_commands
+      expect(r.x_coord).to be nil
+      expect(r.y_coord).to be nil
+      expect(r.facing).to be nil
+    end
+
     it 'reports the coordinates and facing position' do
       allow(Readline).to receive(:readline).exactly(2).times.and_return('REPORT', 'quit')
       r = Robot.new
