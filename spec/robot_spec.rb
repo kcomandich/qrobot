@@ -52,5 +52,17 @@ RSpec.describe Robot do
       r = Robot.new
       expect{r.accept_commands}.to output(/X: 1 Y: 0, Facing: EAST/).to_stdout
     end
+
+    it 'changes the direction the robot is facing LEFT' do
+      allow(Readline).to receive(:readline).exactly(4).times.and_return('PLACE 0,0,NORTH', 'LEFT', 'REPORT', 'QUIT')
+      r = Robot.new
+      expect{r.accept_commands}.to output(/X: 0 Y: 0, Facing: WEST/).to_stdout
+    end
+
+    it 'changes the direction the robot is facing RIGHT' do
+      allow(Readline).to receive(:readline).exactly(4).times.and_return('PLACE 0,0,NORTH', 'RIGHT', 'REPORT', 'QUIT')
+      r = Robot.new
+      expect{r.accept_commands}.to output(/X: 0 Y: 0, Facing: EAST/).to_stdout
+    end
   end
 end
