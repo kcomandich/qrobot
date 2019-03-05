@@ -35,12 +35,15 @@ RSpec.describe Robot do
       expect(r.facing).to be nil
     end
 
-    it 'reports the coordinates and facing position' do
+    it 'ignores all commands until a valid PLACE command is run' do
       allow(Readline).to receive(:readline).exactly(2).times.and_return('REPORT', 'quit')
       r = Robot.new
-      r.x_coord = 1
-      r.y_coord = 2
-      r.facing = 'NORTH'
+      expect{r.accept_commands}.to_not output.to_stdout
+    end
+
+    it 'reports the coordinates and facing position' do
+      allow(Readline).to receive(:readline).exactly(3).times.and_return('PLACE 1,2,NORTH', 'REPORT', 'quit')
+      r = Robot.new
       expect{r.accept_commands}.to output(/X: 1 Y: 2, Facing: NORTH/).to_stdout
     end
   end

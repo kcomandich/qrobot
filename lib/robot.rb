@@ -40,17 +40,23 @@ class Robot
     when 'PLACE'
       return unless args
       x, y, facing = args.upcase.split(',')
-      if check_place_args(x, y, facing)
+      if valid_place_args(x, y, facing)
         @x_coord = x 
         @y_coord = y 
         @facing = facing 
       end
     when 'REPORT'
+      return unless robot_is_on_board
       puts "X: #{@x_coord} Y: #{@y_coord}, Facing: #{@facing}"
     end
   end
 
-  def check_place_args(x, y, facing)
+  def robot_is_on_board
+    return false unless @x_coord and @y_coord and @facing
+    return true
+  end
+
+  def valid_place_args(x, y, facing)
     return false unless VALID_COORDINATES.include? x 
     return false unless VALID_COORDINATES.include? y 
     return false unless VALID_FACING.include? facing
