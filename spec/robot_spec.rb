@@ -4,12 +4,12 @@ RSpec.describe Robot do
 
   describe '#accept_commands' do
     it "quits when the user chooses quit" do
-      allow(Readline).to receive(:readline).exactly(1).times.and_return('quit')
+      allow(Readline).to receive(:readline).exactly(1).times.and_return('QUIT')
       r = Robot.new
     end
 
     it 'remembers the placed position' do
-      allow(Readline).to receive(:readline).exactly(2).times.and_return('PLACE 0,4,SOUTH', 'quit')
+      allow(Readline).to receive(:readline).exactly(2).times.and_return('PLACE 0,4,SOUTH', 'QUIT')
       r = Robot.new
       r.accept_commands
       expect(r.x_coord).to eq(0)
@@ -18,7 +18,7 @@ RSpec.describe Robot do
     end
 
     it 'ignores the PLACE command if there are no args' do
-      allow(Readline).to receive(:readline).exactly(2).times.and_return('PLACE', 'quit')
+      allow(Readline).to receive(:readline).exactly(2).times.and_return('PLACE', 'QUIT')
       r = Robot.new
       r.accept_commands
       expect(r.x_coord).to be nil
@@ -27,7 +27,7 @@ RSpec.describe Robot do
     end
 
     it 'ignores the PLACE command if the coordinates take the robot off the defined board limits' do
-      allow(Readline).to receive(:readline).exactly(2).times.and_return('PLACE 0,9', 'quit')
+      allow(Readline).to receive(:readline).exactly(2).times.and_return('PLACE 0,9', 'QUIT')
       r = Robot.new
       r.accept_commands
       expect(r.x_coord).to be nil
@@ -36,19 +36,19 @@ RSpec.describe Robot do
     end
 
     it 'ignores all commands until a valid PLACE command is run' do
-      allow(Readline).to receive(:readline).exactly(2).times.and_return('REPORT', 'quit')
+      allow(Readline).to receive(:readline).exactly(2).times.and_return('REPORT', 'QUIT')
       r = Robot.new
       expect{r.accept_commands}.to_not output.to_stdout
     end
 
     it 'reports the coordinates and facing position' do
-      allow(Readline).to receive(:readline).exactly(3).times.and_return('PLACE 1,2,NORTH', 'REPORT', 'quit')
+      allow(Readline).to receive(:readline).exactly(3).times.and_return('PLACE 1,2,NORTH', 'REPORT', 'QUIT')
       r = Robot.new
       expect{r.accept_commands}.to output(/X: 1 Y: 2, Facing: NORTH/).to_stdout
     end
 
     it 'moves the robot one unit forward in the direction it is currently facing' do
-      allow(Readline).to receive(:readline).exactly(4).times.and_return('PLACE 0,0,EAST', 'MOVE', 'REPORT', 'quit')
+      allow(Readline).to receive(:readline).exactly(4).times.and_return('PLACE 0,0,EAST', 'MOVE', 'REPORT', 'QUIT')
       r = Robot.new
       expect{r.accept_commands}.to output(/X: 1 Y: 0, Facing: EAST/).to_stdout
     end
