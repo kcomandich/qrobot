@@ -12,8 +12,8 @@ RSpec.describe Robot do
       allow(Readline).to receive(:readline).exactly(2).times.and_return('PLACE 0,4,SOUTH', 'quit')
       r = Robot.new
       r.accept_commands
-      expect(r.x_coord).to eq('0')
-      expect(r.y_coord).to eq('4')
+      expect(r.x_coord).to eq(0)
+      expect(r.y_coord).to eq(4)
       expect(r.facing).to eq('SOUTH')
     end
 

@@ -1,7 +1,7 @@
 require 'readline'
 QUIT_COMMANDS = %w[ QUIT EXIT ]
 VALID_COMMANDS = %w[ QUIT PLACE MOVE LEFT RIGHT REPORT ]
-VALID_COORDINATES = %w[ 0 1 2 3 4 ]
+VALID_COORDINATES = [ 0, 1, 2, 3, 4 ]
 VALID_FACING = %w[ NORTH SOUTH EAST WEST ]
 RED = "\e[31m%s\e[0m"
 
@@ -52,8 +52,8 @@ class Robot
   end
 
   def valid_place_args(x, y, facing)
-    return false unless VALID_COORDINATES.include? x 
-    return false unless VALID_COORDINATES.include? y 
+    return false unless VALID_COORDINATES.include? x.to_i
+    return false unless VALID_COORDINATES.include? y.to_i
     return false unless VALID_FACING.include? facing
     return true
   end
@@ -61,9 +61,10 @@ class Robot
   def place_robot(args)
     x, y, facing = args.upcase.split(',')
     if valid_place_args(x, y, facing)
-      @x_coord = x
-      @y_coord = y
+      @x_coord = x.to_i
+      @y_coord = y.to_i
       @facing = facing
     end
   end
 end
+
