@@ -38,7 +38,6 @@ class Robot
 
     case command
     when 'PLACE'
-      return unless args
       place(args)
     when 'MOVE'
       return unless robot_is_on_board
@@ -56,8 +55,12 @@ class Robot
   end
 
   def robot_is_on_board
-    return false unless @x_coord and @y_coord and @facing
-    return true
+    if @x_coord and @y_coord and @facing
+      return true
+    else
+      STDERR.puts Robot.error 'Robot is not on the board. Use the PLACE command to start the robot.'
+      return false
+    end
   end
 
   def valid_place_args(x, y, facing)
@@ -68,11 +71,17 @@ class Robot
   end
 
   def place(args)
+    unless args
+      STDERR.puts Robot.error 'PLACE command requires coordinates and facing direction, robot not moved'
+      return
+    end
     x, y, facing = args.upcase.split(',')
     if valid_place_args(x, y, facing)
       @x_coord = x.to_i
       @y_coord = y.to_i
       @facing = facing
+    else
+      STDERR.puts Robot.error 'Invalid position, robot not moved'
     end
   end
 
@@ -92,6 +101,8 @@ class Robot
     if valid_place_args(x, y, @facing)
       @x_coord = x
       @y_coord = y
+    else
+      STDERR.puts Robot.error "Robot can't go over the edge of the board, robot not moved"
     end
  end
 

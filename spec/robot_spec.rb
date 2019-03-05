@@ -20,7 +20,7 @@ RSpec.describe Robot do
     it 'ignores the PLACE command if there are no args' do
       allow(Readline).to receive(:readline).exactly(2).times.and_return('PLACE', 'QUIT')
       r = Robot.new
-      r.accept_commands
+      expect{r.accept_commands}.to output(/robot not moved/).to_stderr_from_any_process
       expect(r.x_coord).to be nil
       expect(r.y_coord).to be nil
       expect(r.facing).to be nil
@@ -29,7 +29,7 @@ RSpec.describe Robot do
     it 'ignores the PLACE command if the coordinates take the robot off the defined board limits' do
       allow(Readline).to receive(:readline).exactly(2).times.and_return('PLACE 0,9', 'QUIT')
       r = Robot.new
-      r.accept_commands
+      expect{r.accept_commands}.to output(/robot not moved/).to_stderr_from_any_process
       expect(r.x_coord).to be nil
       expect(r.y_coord).to be nil
       expect(r.facing).to be nil
@@ -38,7 +38,7 @@ RSpec.describe Robot do
     it 'ignores all commands until a valid PLACE command is run' do
       allow(Readline).to receive(:readline).exactly(2).times.and_return('REPORT', 'QUIT')
       r = Robot.new
-      expect{r.accept_commands}.to_not output.to_stdout
+      expect{r.accept_commands}.to output(/Robot is not on the board/).to_stderr_from_any_process
     end
 
     it 'reports the coordinates and facing position' do
@@ -53,6 +53,14 @@ RSpec.describe Robot do
       expect{r.accept_commands}.to output(/X: 1 Y: 0, Facing: EAST/).to_stdout
     end
 
+    it 'warns if MOVE would put the robot off the board and does not move the robot' do
+      allow(Readline).to receive(:readline).exactly(3).times.and_return('PLACE 0,0,WEST', 'MOVE', 'QUIT')
+      r = Robot.new
+      expect{r.accept_commands}.to output(/robot not moved/).to_stderr_from_any_process
+      expect(r.x_coord).to eq 0
+      expect(r.y_coord).to eq 0
+    end
+
     it 'changes the direction the robot is facing LEFT' do
       allow(Readline).to receive(:readline).exactly(4).times.and_return('PLACE 0,0,NORTH', 'LEFT', 'REPORT', 'QUIT')
       r = Robot.new
@@ -63,6 +71,12 @@ RSpec.describe Robot do
       allow(Readline).to receive(:readline).exactly(4).times.and_return('PLACE 0,0,NORTH', 'RIGHT', 'REPORT', 'QUIT')
       r = Robot.new
       expect{r.accept_commands}.to output(/X: 0 Y: 0, Facing: EAST/).to_stdout
+    end
+
+    it 'warns if an invalid command is made' do
+      allow(Readline).to receive(:readline).exactly(2).times.and_return('FAKE', 'QUIT')
+      r = Robot.new
+      expect{r.accept_commands}.to output(/Invalid option/).to_stderr_from_any_process
     end
   end
 end
