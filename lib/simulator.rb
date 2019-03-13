@@ -2,7 +2,7 @@ require 'readline'
 require 'robot'
 
 QUIT_COMMANDS = %w[ QUIT EXIT ]
-VALID_COMMANDS = %w[ QUIT PLACE MOVE LEFT RIGHT REPORT ]
+VALID_COMMANDS = %w[ PLACE MOVE LEFT RIGHT REPORT ]
 RED = "\e[31m%s\e[0m"
 
 class Simulator
