@@ -1,9 +1,9 @@
-require 'robot'
+require 'simulator'
 
-RSpec.describe Robot do
+RSpec.describe Simulator do
 
   before :each do
-    @r = Robot.new
+    @r = Simulator.new
   end
 
   def send_commands(*commands)

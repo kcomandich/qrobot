@@ -1,8 +1,8 @@
 #!/usr/bin/env ruby
 $LOAD_PATH.push File.expand_path("../../lib", __FILE__)
-require 'robot'
+require 'simulator'
 
-robot = Robot.new
-robot.intro_text
-robot.accept_commands
+simulator = Simulator.new
+simulator.intro_text
+simulator.accept_commands
 

@@ -5,7 +5,7 @@ VALID_COORDINATES = [ 0, 1, 2, 3, 4 ]
 VALID_FACING = %w[ NORTH EAST SOUTH WEST ] # ordered from left to right
 RED = "\e[31m%s\e[0m"
 
-class Robot
+class Simulator
   attr_accessor :x_coord, :y_coord, :facing
 
   def initialize
@@ -48,7 +48,7 @@ class Robot
     command = full_command.split[0].upcase
     args = full_command.split[1]
     unless VALID_COMMANDS.include? command
-      STDERR.puts Robot.error 'Invalid option'
+      STDERR.puts Simulator.error 'Invalid option'
       return
     end
 
@@ -74,7 +74,7 @@ class Robot
     if @x_coord and @y_coord and @facing
       return true
     else
-      STDERR.puts Robot.error 'Robot is not on the board. Use the PLACE command to start the robot.'
+      STDERR.puts Simulator.error 'Robot is not on the board. Use the PLACE command to start the robot.'
       return false
     end
   end
@@ -88,7 +88,7 @@ class Robot
 
   def place(args)
     unless args
-      STDERR.puts Robot.error 'PLACE command requires coordinates and facing direction, robot not moved'
+      STDERR.puts Simulator.error 'PLACE command requires coordinates and facing direction, robot not moved'
       return
     end
     x, y, facing = args.upcase.split(',')
@@ -97,7 +97,7 @@ class Robot
       @y_coord = y.to_i
       @facing = facing
     else
-      STDERR.puts Robot.error 'Invalid position, robot not moved'
+      STDERR.puts Simulator.error 'Invalid position, robot not moved'
     end
   end
 
@@ -118,7 +118,7 @@ class Robot
       @x_coord = x
       @y_coord = y
     else
-      STDERR.puts Robot.error "Robot can't go over the edge of the board, robot not moved"
+      STDERR.puts Simulator.error "Robot can't go over the edge of the board, robot not moved"
     end
  end
 
