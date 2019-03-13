@@ -3,9 +3,10 @@ require 'board'
 VALID_DIRECTIONS = %w[ NORTH EAST SOUTH WEST ] # ordered from left to right
 
 class Robot
-  attr_accessor :x_coord, :y_coord, :facing
+  attr_accessor :board, :x_coord, :y_coord, :facing
 
   def initialize
+    @board = Board.new([ 0, 1, 2, 3, 4 ])
     @x_coord = nil
     @y_coord = nil
     @facing = nil
@@ -40,7 +41,7 @@ class Robot
     when 'SOUTH'
       y = @y_coord - 1
     end
-    if Board.valid_coordinates(x, y)
+    if board.valid_coordinates(x, y)
       @x_coord = x
       @y_coord = y
     else
@@ -82,7 +83,7 @@ class Robot
       return
     end
     x, y, facing = args.upcase.split(',')
-    if Board.valid_coordinates(x, y) and Robot.valid_facing(facing)
+    if board.valid_coordinates(x, y) and Robot.valid_facing(facing)
       @x_coord = x.to_i
       @y_coord = y.to_i
       @facing = facing
