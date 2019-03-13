@@ -1,6 +1,6 @@
 require 'board'
 
-VALID_FACING = %w[ NORTH EAST SOUTH WEST ] # ordered from left to right
+VALID_DIRECTIONS = %w[ NORTH EAST SOUTH WEST ] # ordered from left to right
 
 class Robot
   attr_accessor :x_coord, :y_coord, :facing
@@ -11,8 +11,8 @@ class Robot
     @facing = nil
   end
 
-  def valid_facing(facing)
-    return false unless VALID_FACING.include? facing
+  def self.valid_facing(facing)
+    return false unless VALID_DIRECTIONS.include? facing
     return true
   end
 
@@ -51,28 +51,28 @@ class Robot
   def right
     return unless is_on_board
 
-    # VALID_FACING array is ordered from left to right
+    # VALID_DIRECTIONS array is ordered from left to right
     # to turn RIGHT, go to the next item in the array
-    current_facing_index = VALID_FACING.index(@facing)
-    if current_facing_index < VALID_FACING.count-1
-      @facing = VALID_FACING[current_facing_index+1]
+    current_facing_index = VALID_DIRECTIONS.index(@facing)
+    if current_facing_index < VALID_DIRECTIONS.count-1
+      @facing = VALID_DIRECTIONS[current_facing_index+1]
     else
       # (or loop around to the beginning if we're at the end)
-      @facing = VALID_FACING[0]
+      @facing = VALID_DIRECTIONS[0]
     end
   end
 
   def left
     return unless is_on_board
 
-    # VALID_FACING array is ordered from left to right
+    # VALID_DIRECTIONS array is ordered from left to right
     # to turn LEFT, go one item back in the array
-    current_facing_index = VALID_FACING.index(@facing)
+    current_facing_index = VALID_DIRECTIONS.index(@facing)
     if current_facing_index > 0
-      @facing = VALID_FACING[current_facing_index-1]
+      @facing = VALID_DIRECTIONS[current_facing_index-1]
     else
       # (or jump to the end of the array if we're at the beginning)
-      @facing = VALID_FACING[VALID_FACING.count - 1]
+      @facing = VALID_DIRECTIONS[VALID_DIRECTIONS.count - 1]
     end
   end
 
@@ -82,7 +82,7 @@ class Robot
       return
     end
     x, y, facing = args.upcase.split(',')
-    if Board.valid_coordinates(x, y) and valid_facing(facing)
+    if Board.valid_coordinates(x, y) and Robot.valid_facing(facing)
       @x_coord = x.to_i
       @y_coord = y.to_i
       @facing = facing
