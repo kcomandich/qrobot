@@ -12,8 +12,8 @@ class Robot
     @facing = nil
   end
 
-  def self.valid_facing(facing)
-    return false unless VALID_DIRECTIONS.include? facing
+  def self.valid_facing(direction)
+    return false unless VALID_DIRECTIONS.include? direction
     return true
   end
 
@@ -82,11 +82,11 @@ class Robot
       STDERR.puts Simulator.error 'PLACE command requires coordinates and facing direction, robot not moved'
       return
     end
-    x, y, facing = args.upcase.split(',')
-    if board.valid_coordinates(x, y) and Robot.valid_facing(facing)
+    x, y, direction = args.upcase.split(',')
+    if board.valid_coordinates(x, y) and Robot.valid_facing(direction)
       @x_coord = x.to_i
       @y_coord = y.to_i
-      @facing = facing
+      @facing = direction
     else
       STDERR.puts Simulator.error 'Invalid position, robot not moved'
     end
